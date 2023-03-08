@@ -11,9 +11,12 @@ public class PlayerHealth : MonoBehaviour
     private float delayTime = 1f;
     private float time;
 
+    public static PlayerHealth instance;
     // Start is called before the first frame update
     void Awake()
     {
+        instance = this;
+
         hp = maxHp;
         time = delayTime;
     }
@@ -53,7 +56,7 @@ public class PlayerHealth : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == "Damageable" && canDamage)
+        if(collision.CompareTag("Damageable") && canDamage)
         {
             GetDamage();
         }
