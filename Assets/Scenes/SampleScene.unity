@@ -407,6 +407,7 @@ MonoBehaviour:
   hp_txt: {fileID: 1282890788}
   score_txt: {fileID: 1756469220}
   PausePanel: {fileID: 964245719}
+  InventoryPanel: {fileID: 1298563656}
   card_txt:
   - {fileID: 1687250508}
   - {fileID: 416800574}
@@ -3368,12 +3369,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0371750913c500e41ac114d48deeab41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedCard: 0
-  jumpCard: 0
-  hpCard: 0
-  flyCard: 0
-  dashCard: 0
-  sheildCard: 0
 --- !u!1 &2030586389
 GameObject:
   m_ObjectHideFlags: 0

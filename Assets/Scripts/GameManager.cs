@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour
     private bool isPause;
     [SerializeField] private GameObject PausePanel;
 
+    private bool isShowInventory = true;
+    [SerializeField] private GameObject InventoryPanel;
+
     [SerializeField] private Text[] card_txt;
     // Start is called before the first frame update
     void Awake()
@@ -31,7 +34,7 @@ public class GameManager : MonoBehaviour
         hp_txt.text = PlayerHealth.instance.hp.ToString();
         score_txt.text = score.ToString();
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if(Input.GetKeyDown(KeyCode.Escape))
         {
             if(!isPause)
             {
@@ -40,6 +43,18 @@ public class GameManager : MonoBehaviour
             else
             {
                 Continue();
+            }
+        }
+
+        if(Input.GetKeyDown(KeyCode.I))
+        {
+            if (isShowInventory)
+            {
+                HideInventory();
+            }
+            else
+            {
+                ShowInventory();
             }
         }
     }
@@ -77,5 +92,14 @@ public class GameManager : MonoBehaviour
         isPause = false;
         PausePanel.SetActive(false);
     }
-
+    private void ShowInventory()
+    {
+        isShowInventory= true;
+        InventoryPanel.SetActive(true);
+    }
+    private void HideInventory()
+    {
+        isShowInventory= false;
+        InventoryPanel.SetActive(false);
+    }
 }
