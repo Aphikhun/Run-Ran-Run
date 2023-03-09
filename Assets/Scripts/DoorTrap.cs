@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KillPlayer : MonoBehaviour
+public class DoorTrap : MonoBehaviour
 {
+    [SerializeField] private Rigidbody2D doorRb;
+
+    
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            PlayerHealth.instance.SetPlayerDie();
-        }
-        else if(collision.CompareTag("Damageable"))
-        {
-            Destroy(collision.gameObject);
+            doorRb.gravityScale = 1f;
+            Destroy(gameObject);
         }
     }
 }
