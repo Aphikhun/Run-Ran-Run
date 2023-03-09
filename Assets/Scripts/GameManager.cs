@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class GameManager : MonoBehaviour
     private float time;
     [SerializeField] private Text hp_txt;
     [SerializeField] private Text score_txt;
+    [SerializeField] private Text result_txt;
 
     private bool isPause;
     [SerializeField] private GameObject PausePanel;
@@ -17,12 +19,16 @@ public class GameManager : MonoBehaviour
     private bool isShowInventory = true;
     [SerializeField] private GameObject InventoryPanel;
 
+    [SerializeField] private GameObject GameOverPanel;
+
     [SerializeField] private Text[] card_txt;
     // Start is called before the first frame update
     void Awake()
     {
         score = 0;
         time = 0;
+
+        Time.timeScale = 1;
     }
 
     // Update is called once per frame
@@ -30,11 +36,12 @@ public class GameManager : MonoBehaviour
     {
         CountScore();
         SetCardAmount();
+        PlayerDie();
 
         hp_txt.text = PlayerHealth.instance.hp.ToString();
         score_txt.text = score.ToString();
 
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if(Input.GetKeyDown(KeyCode.Escape) && !PlayerHealth.instance.isDie)
         {
             if(!isPause)
             {
@@ -46,7 +53,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if(Input.GetKeyDown(KeyCode.I))
+        if(Input.GetKeyDown(KeyCode.I) && !PlayerHealth.instance.isDie && !isPause)
         {
             if (isShowInventory)
             {
@@ -80,6 +87,15 @@ public class GameManager : MonoBehaviour
             i++;
         }
     }
+    private void PlayerDie()
+    {
+        if (PlayerHealth.instance.isDie)
+        {
+            Time.timeScale = 0f;
+            result_txt.text = score.ToString();
+            GameOverPanel.SetActive(true);
+        }
+    }
     public void Pause()
     {
         Time.timeScale = 0f;
@@ -91,6 +107,14 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         isPause = false;
         PausePanel.SetActive(false);
+    }
+    public void Exit()
+    {
+        Application.Quit();
+    }
+    public void PlayAgain()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     private void ShowInventory()
     {

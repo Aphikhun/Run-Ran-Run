@@ -5,25 +5,57 @@ using UnityEngine;
 public class StageMovement : MonoBehaviour
 {
     public float speed = 3f;
+    private int speedCard;
+    private float ex_speed = 6f;
+    private bool useCard;
+    private float time;
+    private float duration = 10f;
 
     [SerializeField] private float max_x;
     [SerializeField] private float min_x;
 
-    void Start()
+    void Awake()
     {
-
+        time = 0;
+        useCard = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(transform.position.x > min_x)
+        speedCard = PlayerInventory.instance.GetCardAmount("speed");
+
+        if(Input.GetKeyDown(KeyCode.Alpha1) && speedCard > 0)
         {
-            transform.position = new Vector2(transform.position.x - speed * Time.deltaTime, transform.position.y);
+            useCard = true;
+        }
+
+        if(useCard)
+        {
+            MoveScene(ex_speed);
+
+            time += Time.deltaTime;
+            if(time >= duration)
+            {
+                useCard= false;
+                time = 0;
+            }
         }
         else
         {
-            transform.position = new Vector3(max_x,transform.position.y,transform.position.z);
+            MoveScene(speed);
+        }
+        
+    }
+    private void MoveScene(float useSpeed)
+    {
+        if (transform.position.x > min_x)
+        {
+            transform.position = new Vector2(transform.position.x - useSpeed * Time.deltaTime, transform.position.y);
+        }
+        else
+        {
+            transform.position = new Vector3(max_x, transform.position.y, transform.position.z);
         }
     }
 }

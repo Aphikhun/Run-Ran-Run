@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
 {
-    public Dictionary<string,int> Cards = new Dictionary<string,int>();
+    public Dictionary<string,int> Cards = new();
     private int maxStorage = 5;
     private int storage = 0;
 
@@ -13,19 +13,15 @@ public class PlayerInventory : MonoBehaviour
     void Awake()
     {
         instance = this;
-        Cards.Clear();
+        //Cards.Clear();
         Cards["speed"] = 0;
         Cards["jump"] = 0;
         Cards["hp"] = 0;
-        Cards["fly"] = 0;
+        Cards["fly"] = 1;
         Cards["dash"] = 0;
         Cards["shield"] = 0;
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        storage = 0;
     }
 
     public void GetCard(int random)
@@ -63,15 +59,24 @@ public class PlayerInventory : MonoBehaviour
                     break;
             }
         }
+        /*
         storage = 0;
         foreach (var card in Cards)
         {
             storage += card.Value;
         }
+        */
+        storage++;
     }
 
-    public void UseCard()
+    public int GetCardAmount(string cardName)
     {
-        
+        return Cards[cardName];
+    }
+
+    public void UseCard(string cardName)
+    {
+        Cards[cardName] -= 1;
+        storage--;
     }
 }
