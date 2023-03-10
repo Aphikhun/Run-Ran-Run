@@ -9,19 +9,19 @@ public class GameManager : MonoBehaviour
 {
     private int score;
     private float time;
-    [SerializeField] private Text hp_txt = null;
-    [SerializeField] private Text score_txt = null;
-    [SerializeField] private Text result_txt = null;
+    [SerializeField] private Text hp_txt;
+    [SerializeField] private Text score_txt;
+    [SerializeField] private Text result_txt;
 
     private bool isPause;
-    [SerializeField] private GameObject PausePanel = null;
+    [SerializeField] private GameObject PausePanel;
 
     private bool isShowInventory = true;
-    [SerializeField] private GameObject InventoryPanel = null;
+    [SerializeField] private GameObject InventoryPanel;
 
-    [SerializeField] private GameObject GameOverPanel = null;
+    [SerializeField] private GameObject GameOverPanel;
 
-    [SerializeField] private Text[] card_txt = null;
+    [SerializeField] private Text[] card_txt;
     // Start is called before the first frame update
     void Awake()
     {
@@ -108,10 +108,6 @@ public class GameManager : MonoBehaviour
         isPause = false;
         PausePanel.SetActive(false);
     }
-    public void Play()
-    {
-        SceneManager.LoadScene("SampleScene");
-    }
     public void Exit()
     {
         Application.Quit();
@@ -119,10 +115,6 @@ public class GameManager : MonoBehaviour
     public void PlayAgain()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-    public void MainMenu()
-    {
-        SceneManager.LoadScene("MainMenu");
     }
     private void ShowInventory()
     {

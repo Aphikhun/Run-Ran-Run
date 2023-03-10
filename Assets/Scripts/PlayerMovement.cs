@@ -1,16 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody2D rb;
     [SerializeField] private Transform checkGround;
     [SerializeField] private bool isGround;
-
-    [SerializeField] private GameObject sliderBar;
-    [SerializeField] private Slider slider;
 
     [SerializeField] private LayerMask groundLayer;
     public float jumpForce = 5f;
@@ -35,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
 
         time = 0;
-        fly_count = fly_dur;
+        fly_count = 0;
         isDash = false;
         isFly = false;
         canDo= true;
@@ -54,8 +50,6 @@ public class PlayerMovement : MonoBehaviour
 
         if(!isFly)
         {
-            sliderBar.SetActive(false);
-
             if (Input.GetKeyDown(KeyCode.Space) && canDo)
             {
                 if (isGround)
@@ -71,13 +65,10 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            sliderBar.SetActive(true);
-            Slider();
-
-            fly_count -= Time.deltaTime;
-            if(fly_count <= 0)
+            fly_count += Time.deltaTime;
+            if(fly_count >= fly_dur)
             {
-                fly_count = fly_dur;
+                fly_count = 0;
                 isFly = false;
                 rb.gravityScale = 1f;
             }
@@ -135,11 +126,5 @@ public class PlayerMovement : MonoBehaviour
                 rb.velocity = Vector2.zero;
             }
         }
-    }
-
-    private void Slider()
-    {
-        slider.maxValue = fly_dur;
-        slider.value = fly_count;
     }
 }
